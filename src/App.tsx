@@ -1,11 +1,11 @@
 import { GlobalStyles } from './globalStyles';
-import Board from './pages/Board';
+import BoardHome from './pages/BoardHome';
 
 const App: React.FC = () => {
   return (
     <>
       <GlobalStyles />
-      <Board />
+      <BoardHome />
     </>
   );
 };

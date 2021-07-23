@@ -1,57 +1,42 @@
-import { ChessPieceTypes, Teams } from './../models/ChessPieceTypes';
-import { ChessPiece } from '../models/ChessPieceTypes';
+import { BoardSquareModel } from './../models/Board';
+import { Teams } from '../models/Pieces/ChessPiece';
+import { ChessPiece } from '../models/Pieces/ChessPiece';
+import {
+  Pawn,
+  Rook,
+  Knight,
+  King,
+  Queen,
+  Bishop,
+} from '../models/Pieces';
 
 export function getInitialPieceTo(
-  boardLocation: [number, number]
+  boardSquare: BoardSquareModel
 ): ChessPiece | undefined {
-  const [axisX, axisY] = boardLocation;
+  const [axisX, axisY] = boardSquare.location;
 
   let pieceTeam: Teams | undefined;
-  if (axisX === 0 || axisX === 1) pieceTeam = Teams.White;
-  else if (axisX === 6 || axisX === 7) pieceTeam = Teams.Black;
+  if (axisX === 0 || axisX === 1) pieceTeam = Teams.Black;
+  else if (axisX === 6 || axisX === 7) pieceTeam = Teams.White;
 
   if (!pieceTeam) return undefined;
 
   if (axisX === 1 || axisX === 6)
-    return new ChessPiece(
-      pieceTeam,
-      ChessPieceTypes.Pawn,
-      boardLocation
-    );
+    return new Pawn(pieceTeam, boardSquare);
 
   switch (axisY) {
     case 0:
     case 7:
-      return new ChessPiece(
-        pieceTeam,
-        ChessPieceTypes.Tower,
-        boardLocation
-      );
+      return new Rook(pieceTeam, boardSquare);
     case 1:
     case 6:
-      return new ChessPiece(
-        pieceTeam,
-        ChessPieceTypes.Knight,
-        boardLocation
-      );
+      return new Knight(pieceTeam, boardSquare);
     case 2:
     case 5:
-      return new ChessPiece(
-        pieceTeam,
-        ChessPieceTypes.Bishop,
-        boardLocation
-      );
+      return new Bishop(pieceTeam, boardSquare);
     case 3:
-      return new ChessPiece(
-        pieceTeam,
-        ChessPieceTypes.Queen,
-        boardLocation
-      );
+      return new Queen(pieceTeam, boardSquare);
     case 4:
-      return new ChessPiece(
-        pieceTeam,
-        ChessPieceTypes.King,
-        boardLocation
-      );
+      return new King(pieceTeam, boardSquare);
   }
 }
